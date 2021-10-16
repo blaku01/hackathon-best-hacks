@@ -1,6 +1,7 @@
 from django.db.models import Q # for queries
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from .models import User
 from django.core.exceptions import ValidationError
 from uuid import uuid4
@@ -9,11 +10,11 @@ from uuid import uuid4
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
+        validators=[]
         )
     phone_number = serializers.CharField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all()), MinLengthValidator(9), MaxLengthValidator(9)]
         )
     password = serializers.CharField(max_length=8)
 
@@ -28,34 +29,34 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.ModelSerializer):
     # to accept either phone_number or name
-    user_id = serializers.CharField()
+    phone_num = serializers.CharField()
     password = serializers.CharField()
     token = serializers.CharField(required=False, read_only=True)
 
     def validate(self, data):
         # user,name,password validator
-        user_id = data.get("user_id", None)
+        phone_num = data.get("user_id", None)
         password = data.get("password", None)
-        if not user_id and not password:
+        if not phone_num and not password:
             raise ValidationError("Details not entered.")
         user = None
         # if the name has been passed
-        if '@' in user_id:
+        if '@' in phone_num:
             user = User.objects.filter(
-                Q(name=user_id) &
+                Q(name=phone_num) &
                 Q(password=password)
                 ).distinct()
             if not user.exists():
                 raise ValidationError("User credentials are not correct.")
-            user = User.objects.get(name=user_id)
+            user = User.objects.get(name=phone_num)
         else:
             user = User.objects.filter(
-                Q(phone_number=user_id) &
+                Q(phone_number=phone_num) &
                 Q(password=password)
             ).distinct()
             if not user.exists():
                 raise ValidationError("User credentials are not correct.")
-            user = User.objects.get(phone_number=user_id)
+            user = User.objects.get(phone_number=phone_num)
         if user.ifLogged:
             raise ValidationError("User already logged in.")
         user.ifLogged = True
@@ -67,7 +68,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'user_id',
+            'phone_num',
             'password',
             'token',
         )
