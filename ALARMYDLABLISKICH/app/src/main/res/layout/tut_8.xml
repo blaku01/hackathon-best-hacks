@@ -7,45 +7,42 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="545dp"
-        android:layout_height="195dp"
+        android:layout_width="469dp"
+        android:layout_height="100dp"
         android:fontFamily="@font/trebucbd"
-        android:text="Kiedy klikniesz na symbol +, będziesz mógł dodać bliskich."
+        android:text="Twoi bliscy:"
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textColorLink="@color/blue"
         android:textSize="50sp"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="346dp" />
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="198dp" />
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="545dp"
-        android:layout_height="320dp"
+        android:layout_width="502dp"
+        android:layout_height="560dp"
         android:fontFamily="@font/trebucbd"
-        android:text="Bliscy dostają wiadomość, gdy upadniesz, lub wezwiesz ich za pomocą widgetu."
+        android:text="Po kliknięciu zębatki w prawym górnym rogu, otworzysz ustawienia. Możesz tam wyłączyć monitorowanie upadku lub czytanie komunikatu."
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textColorLink="@color/blue"
         android:textSize="50sp"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="541dp" />
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="375dp" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="389dp"
-        android:layout_height="112dp"
-        android:layout_marginBottom="48dp"
+        android:id="@+id/textView18"
+        android:layout_width="500dp"
+        android:layout_height="290dp"
         android:fontFamily="@font/trebucbd"
-        android:text="kliknij ekran, aby przejść dalej"
+        android:text="Możesz też dodać tam swoje choroby. Zajrzyj tam proszę."
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textColorLink="@color/blue"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="50sp"
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="923dp" />
 
     <View
         android:id="@+id/view"

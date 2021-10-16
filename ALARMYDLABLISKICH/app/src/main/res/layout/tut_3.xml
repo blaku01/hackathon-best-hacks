@@ -15,7 +15,7 @@
         android:textColor="@color/blue"
         android:textColorLink="@color/blue"
         android:textSize="50sp"
-        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="346dp" />
 
     <TextView
