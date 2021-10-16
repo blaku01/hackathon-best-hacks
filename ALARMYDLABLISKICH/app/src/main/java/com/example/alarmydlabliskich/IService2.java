@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.core.app.ActivityCompat;
-
+import android.os.Bundle;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,11 +21,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-
+import android.app.Activity.*;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 
@@ -87,18 +89,7 @@ public class IService2 extends Service implements SensorEventListener {
     private Sensor senProximity;
     private SensorEvent mSensorEvent;
 
-    //GPS
-    double latitude, longitude;
-    LocationManager locationManager;
-    LocationListener locationListener;
 
-    //SMS Variables
-    SmsManager smsManager = SmsManager.getDefault();
-    String phoneNum = "8503391620";
-    String textMsg;
-    private String prevNumber;
-    private Float x, y, z;
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
     private Runnable doPeriodicTask = new Runnable() {
         public void run() {
@@ -127,75 +118,18 @@ public class IService2 extends Service implements SensorEventListener {
     public void onDestroy() {
         super.onDestroy();
         mPeriodicEventHandler.removeCallbacks(doPeriodicTask);
-        Log.d("Stopping Service", "OnDestroy");
-        senSensorManager.unregisterListener(this);
+        //senSensorManager.unregisterListener(this);
         sendCount = 0;
         Toast.makeText(this, "Stopped Tracking", Toast.LENGTH_SHORT).show();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
         }else {
-            locationManager.removeUpdates(locationListener);
+//            locationManager.removeUpdates(locationListener);
         }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flag, int startId) {
-        Log.d("Starting work", "OnStart");
-
-        // Acquire a reference to the system Location Manager
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        // Define a listener that responds to location updates
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                Log.d("latitude changed", "" + latitude);
-                Log.d("longitude changed", "" + longitude);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        // Register the listener with the Location Manager to receive location updates
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            handler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    Toast.makeText(IService2.this.getApplicationContext(), "No GPS Permission!!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
-
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            handler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    Toast.makeText(IService2.this.getApplicationContext(), "No GPS Permission", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        latitude = locationManager.getLastKnownLocation(locationProvider).getLatitude();
-        longitude = locationManager.getLastKnownLocation(locationProvider).getLongitude();
-        Log.d("latitude", ""+latitude);
-        Log.d("longitude", ""+longitude);
 
         onTaskRemoved(intent);
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -403,21 +337,21 @@ public class IService2 extends Service implements SensorEventListener {
             fusedOrientation[0] =
                     FILTER_COEFFICIENT * gyroOrientation[0]
                             + oneMinusCoeff * accMagOrientation[0];
-//            Log.d("X:", ""+fusedOrientation[0]);
+            //Log.d("X:", ""+fusedOrientation[0]);
 
             fusedOrientation[1] =
                     FILTER_COEFFICIENT * gyroOrientation[1]
                             + oneMinusCoeff * accMagOrientation[1];
-//            Log.d("Y:", ""+fusedOrientation[1]);
+            //Log.d("Y:", ""+fusedOrientation[1]);
             fusedOrientation[2] =
                     FILTER_COEFFICIENT * gyroOrientation[2]
                             + oneMinusCoeff * accMagOrientation[2];
-//            Log.d("Z:", ""+fusedOrientation[2]);
+            //Log.d("Z:", ""+fusedOrientation[2]);
 
             //**********Sensing Danger**********
             double SMV = Math.sqrt(accel[0] * accel[0] + accel[1] * accel[1] + accel[2] * accel[2]);
 //                Log.d("SMV:", ""+SMV);
-            if (SMV > 25) {
+            if (SMV > 23) {
                 if (sentRecently == 'N') {
                     Log.d("Accelerometer vector:", "" + SMV);
                     degreeFloat = (float) (fusedOrientation[1] * 180 / Math.PI);
@@ -428,31 +362,17 @@ public class IService2 extends Service implements SensorEventListener {
                         degreeFloat2 = degreeFloat2 * -1;
 //                    Log.d("Degrees:", "" + degreeFloat);
                     if (degreeFloat > 30 || degreeFloat2 > 30) {
-
-                        Log.d("Degree1:", "" + degreeFloat);
-                        Log.d("Degree2:", "" + degreeFloat2);
-                        handler.post(new Runnable() {
+                        MainActivity.getInstance().runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
-                                Toast.makeText(IService2.this.getApplicationContext(), "Sensed Danger! Sending SMS", Toast.LENGTH_SHORT).show();
+
+                                MainActivity.getInstance().DetectedFall();
+
                             }
                         });
-//                    Toast.makeText(getApplicationContext(), "Sensed Danger! Sending SMS", Toast.LENGTH_SHORT).show();
 
-
-
-                    } else {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(IService2.this.getApplicationContext(), "Sudden Movement! But looks safe", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        sendCount++;
                     }
-                    sentRecently='Y';
-                    Log.d("Delay", "Delay Start**********");
                     mPeriodicEventHandler.postDelayed(doPeriodicTask, PERIODIC_EVENT_TIMEOUT);
                 }
             }

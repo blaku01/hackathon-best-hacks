@@ -41,24 +41,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/alarm_text4"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="4dp"
-        android:gravity="center"
-        android:text="3"
-        android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textSize="75sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/stop_button2"
-        app:layout_constraintEnd_toEndOf="@+id/stop_button2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/stop_button2"
-        app:layout_constraintTop_toTopOf="@+id/stop_button2"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -4,18 +4,19 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 28
 
     defaultConfig {
         applicationId "com.example.alarmydlabliskich"
         minSdk 23
-        targetSdk 30
+        targetSdk 26
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        minSdkVersion 30
-        targetSdkVersion 30
+        minSdkVersion 26
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -31,7 +32,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion '30.0.2'
 }
 

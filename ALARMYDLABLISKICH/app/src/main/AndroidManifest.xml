@@ -3,8 +3,10 @@
     package="com.example.alarmydlabliskich">
 
     <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"
-        android:maxSdkVersion="22" />
+        android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,13 +16,20 @@
         android:theme="@style/Theme.ALARMYDLABLISKICH">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:showOnLockScreen="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".IService2"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>
