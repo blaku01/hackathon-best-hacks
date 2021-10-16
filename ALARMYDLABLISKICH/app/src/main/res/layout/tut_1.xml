@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/lightblue"
+        tools:layout_editor_absoluteX="2dp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="389dp"
+        android:layout_height="112dp"
+        android:layout_marginBottom="48dp"
+        android:fontFamily="@font/trebucbd"
+        android:text="kliknij ekran, aby przejść dalej"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textColorLink="@color/blue"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/trebucbd"
+        android:text="Witaj,"
+        android:textColor="@color/blue"
+        android:textColorLink="@color/blue"
+        android:textSize="80sp"
+        tools:layout_editor_absoluteX="155dp"
+        tools:layout_editor_absoluteY="113dp" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/trebucbd"
+        android:textColor="@color/blue"
+        android:textColorLink="@color/blue"
+        android:textSize="80sp"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="214dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
