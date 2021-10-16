@@ -17,20 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/alarm_text2"
-        android:layout_width="314dp"
-        android:layout_height="231dp"
-        android:gravity="center"
-        android:text="3"
-        android:textAlignment="center"
-        android:textColor="@color/blue"
-        android:textSize="55sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/stop_button2"
-        app:layout_constraintStart_toStartOf="@+id/stop_button2"
-        app:layout_constraintTop_toTopOf="@+id/stop_button2" />
-
     <View
         android:id="@+id/view"
         android:layout_width="593dp"
